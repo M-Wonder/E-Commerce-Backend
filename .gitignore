@@ -1,0 +1,16 @@
+# Environment variables
+.env
+
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+
+# Docker
+*.log
+
+# IDE
+.vscode/
+.idea/
