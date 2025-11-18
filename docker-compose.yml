@@ -1,4 +1,3 @@
-
 services:
   db:
     image: postgres:15
@@ -23,7 +22,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_HOST: db
+      DATABASE_HOST: db           # ✔ Should point to service name 'db'
       DATABASE_PORT: 5432
       DATABASE_NAME: ecommerce_db
       DATABASE_USER: postgres
