@@ -6,8 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-this-in-production')
 DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
-
+ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,6 +23,7 @@ INSTALLED_APPS = [
     # Local apps
     'products',
     'users',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +64,7 @@ DATABASES = {
         'NAME': config('DATABASE_NAME', default='ecommerce_db'),
         'USER': config('DATABASE_USER', default='postgres'),
         'PASSWORD': config('DATABASE_PASSWORD', default='postgres'),
-        'HOST': config('DATABASE_HOST', default='localhost'),
+        'HOST': config('DATABASE_HOST', default='db'),
         'PORT': config('DATABASE_PORT', default='5432'),
     }
 }
