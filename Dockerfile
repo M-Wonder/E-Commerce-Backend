@@ -1,8 +1,12 @@
+# Base image
 FROM python:3.11-slim
 
+# Environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV DJANGO_SETTINGS_MODULE=core.settings
 
+# Set working directory
 WORKDIR /app
 
 # System dependencies
@@ -12,17 +16,15 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies first (for caching)
+# Copy requirements first (caching)
 COPY requirements.txt /app/
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
 COPY . /app/
 
-# Make wait-for-db.sh executable
-RUN chmod +x /app/wait-for-db.sh
-
+# Expose the port Render uses
 EXPOSE 8000
 
-# The actual command is defined in docker-compose.yml
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Start Django server using $PORT if available (Render sets this automatically)
+CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:${PORT:-8000}"]
