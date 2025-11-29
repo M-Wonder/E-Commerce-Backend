@@ -2,8 +2,8 @@
 services:
   web:
     build: .
-    command: ["./wait-for-db.sh", "db", "gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:${PORT}"]
-    
+    command: ["./wait-for-db.sh", "gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:${PORT}"]
+
     volumes:
       - .:/app
     ports:
